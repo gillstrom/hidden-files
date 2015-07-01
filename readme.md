@@ -52,7 +52,7 @@ Check if hidden files are shown or hidden.
 
 Show hidden files.
 
-### .off(callback)
+### .hide(callback)
 
 Hide hidden files.
 
