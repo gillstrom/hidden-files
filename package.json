@@ -1,6 +1,6 @@
 {
   "name": "hidden-files",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Show or hide hidden files in OS X",
   "license": "MIT",
   "repository": "gillstrom/hidden-files",
