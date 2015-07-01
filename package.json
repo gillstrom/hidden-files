@@ -1,0 +1,41 @@
+{
+  "name": "hidden-files",
+  "version": "1.0.0",
+  "description": "Show or hide hidden files in OS X",
+  "license": "MIT",
+  "repository": "gillstrom/hidden-files",
+  "author": {
+    "name": "Andreas Gillström",
+    "email": "andreasgillstrom@gmail.com",
+    "url": "github.com/gillstrom"
+  },
+  "bin": "cli.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    "files",
+    "hide",
+    "hidden",
+    "hidden files",
+    "osx",
+    "show"
+  ],
+  "dependencies": {
+    "fkill": "^1.0.0",
+    "log-symbols": "^1.0.2",
+    "meow": "^3.3.0"
+  },
+  "devDependencies": {
+    "ava": "^0.0.4"
+  }
+}
