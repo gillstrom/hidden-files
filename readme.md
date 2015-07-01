@@ -1,6 +1,7 @@
 # hidden-files [![Build Status](https://travis-ci.org/gillstrom/hidden-files.svg?branch=master)](https://travis-ci.org/gillstrom/hidden-files)
 
-> Show or hide hidden files on OS X systems
+> Show or hide hidden files on OS X systems.
+
 *Finder is automatically restarted*
 
 
