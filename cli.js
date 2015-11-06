@@ -4,14 +4,12 @@ var meow = require('meow');
 var logSymbols = require('log-symbols');
 var hiddenFiles = require('./');
 
-var cli = meow({
-	help: [
-		'Usage',
-		'  $ hidden-files',
-		'  $ hidden-files show',
-		'  $ hidden-files hide'
-	]
-});
+var cli = meow([
+	'Usage',
+	'  $ hidden-files',
+	'  $ hidden-files show',
+	'  $ hidden-files hide'
+]);
 
 if (!cli.input.length) {
 	hiddenFiles.isShown(function (err, state) {

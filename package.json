@@ -33,7 +33,7 @@
   "dependencies": {
     "fkill": "^1.0.0",
     "log-symbols": "^1.0.2",
-    "meow": "^3.3.0"
+    "meow": "^3.5.0"
   },
   "devDependencies": {
     "ava": "^0.0.4"
