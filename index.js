@@ -19,8 +19,9 @@ exports.isShown = function (cb) {
 			cb(err);
 			return;
 		}
-
-		cb(null, res.trim() === 'true');
+		
+		res = res.trim().toLowerCase();
+		cb(null, res === 'true' || res === 'yes');
 	});
 };
 
