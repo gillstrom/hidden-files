@@ -1,28 +1,26 @@
 #!/usr/bin/env node
 'use strict';
-var meow = require('meow');
-var logSymbols = require('log-symbols');
-var hiddenFiles = require('./');
+const meow = require('meow');
+const logSymbols = require('log-symbols');
+const hiddenFiles = require('./');
 
-var cli = meow([
-	'Usage',
-	'  $ hidden-files',
-	'  $ hidden-files show',
-	'  $ hidden-files hide'
-]);
+const cli = meow(`
+	Usage
+	  $ hidden-files
+	  $ hidden-files show
+	  $ hidden-files hide
+`);
 
 if (!cli.input.length) {
-	hiddenFiles.isShown(function (err, state) {
-		if (err) {
-			console.error(err.message);
+	return hiddenFiles.isShown()
+		.then(state => {
+			console.log(state ? `${logSymbols.success} Shown` : `${logSymbols.error} Hidden`);
+			process.exit(state ? 1 : 0);
+		})
+		.catch(err => {
+			console.error(err);
 			process.exit(3);
-		}
-
-		console.log(state ? logSymbols.success + ' Shown' : logSymbols.error + ' Hidden');
-		process.exit(state ? 1 : 0);
-	});
-
-	return;
+		});
 }
 
 if (cli.input[0] !== 'show' && cli.input[0] !== 'hide') {
@@ -30,14 +28,14 @@ if (cli.input[0] !== 'show' && cli.input[0] !== 'hide') {
 	process.exit(3);
 }
 
-var state = cli.input[0] === 'show' ? true : false;
+const state = cli.input[0] === 'show';
 
-hiddenFiles.toggle(state, function (err) {
-	if (err) {
-		console.error(err.message);
+hiddenFiles.toggle(state)
+	.then(() => {
+		console.log(state ? `${logSymbols.success} Shown` : `${logSymbols.error} Hidden`);
+		process.exit(state ? 1 : 0);
+	})
+	.catch(err => {
+		console.error(err);
 		process.exit(3);
-	}
-
-	console.log(state ? logSymbols.success + ' Shown' : logSymbols.error + ' Hidden');
-	process.exit(state ? 1 : 0);
-});
+	});

@@ -1,113 +1,63 @@
 'use strict';
-var execFile = require('child_process').execFile;
-var fkill = require('fkill');
+const execa = require('execa');
+const fkill = require('fkill');
 
-exports.isShown = function (cb) {
+exports.isShown = () => {
 	if (process.platform !== 'darwin') {
 		throw new Error('Only OS X systems are supported');
 	}
 
-	var cmd = 'defaults';
-	var args = [
+	const cmd = 'defaults';
+	const args = [
 		'read',
 		'com.apple.finder',
 		'AppleShowAllFiles'
 	];
 
-	execFile(cmd, args, function (err, res) {
-		if (err) {
-			cb(err);
-			return;
-		}
-		
-		res = res.trim().toLowerCase();
-		cb(null, res === 'true' || res === 'yes');
+	return execa(cmd, args).then(res => {
+		const ret = res.stdout.trim().toLowerCase();
+		return ret === 'true' || ret === 'yes';
 	});
 };
 
-exports.show = function (cb) {
+exports.show = () => {
 	if (process.platform !== 'darwin') {
 		throw new Error('Only OS X systems are supported');
 	}
 
-	var cmd = 'defaults';
-	var args = [
+	const cmd = 'defaults';
+	const args = [
 		'write',
 		'com.apple.finder',
 		'AppleShowAllFiles',
 		'true'
 	];
 
-	execFile(cmd, args, function (err) {
-		if (err) {
-			cb(err);
-			return;
-		}
-
-		fkill('Finder', function (err) {
-			if (err) {
-				cb(err);
-				return;
-			}
-
-			cb();
-		});
-	});
+	return execa(cmd, args).then(() => fkill('Finder'));
 };
 
-exports.hide = function (cb) {
+exports.hide = () => {
 	if (process.platform !== 'darwin') {
 		throw new Error('Only OS X systems are supported');
 	}
 
-	var cmd = 'defaults';
-	var args = [
+	const cmd = 'defaults';
+	const args = [
 		'write',
 		'com.apple.finder',
 		'AppleShowAllFiles',
 		'false'
 	];
 
-	execFile(cmd, args, function (err) {
-		if (err) {
-			cb(err);
-			return;
-		}
-
-		fkill('Finder', function (err) {
-			if (err) {
-				cb(err);
-				return;
-			}
-
-			cb();
-		});
-	});
+	return execa(cmd, args).then(() => fkill('Finder'));
 };
 
-exports.toggle = function (force, cb) {
-	if (typeof force === 'function' && typeof cb !== 'function') {
-		cb = force;
-	}
-
+exports.toggle = force => {
 	if (force === true) {
-		exports.show(cb);
-		return;
+		return exports.show();
 	} else if (force === false) {
-		exports.hide(cb);
-		return;
+		return exports.hide();
 	}
 
-	exports.isShown(function (err, res) {
-		if (err) {
-			cb(err);
-			return;
-		}
-
-		if (res === true) {
-			exports.hide(cb);
-		} else {
-			exports.show(cb);
-		}
-	});
+	return exports.isShown().then(shown => shown ? exports.hide() : exports.show());
 };
