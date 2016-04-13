@@ -14,7 +14,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "ava"
   },
   "files": [
     "index.js",
@@ -31,11 +31,11 @@
     "show"
   ],
   "dependencies": {
-    "fkill": "^1.0.0",
+    "fkill": "^4.0.0",
     "log-symbols": "^1.0.2",
     "meow": "^3.5.0"
   },
   "devDependencies": {
-    "ava": "^0.0.4"
+    "ava": "*"
   }
 }

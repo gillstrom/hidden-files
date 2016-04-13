@@ -1,49 +1,25 @@
-'use strict';
-var test = require('ava');
-var hiddenFiles = require('./');
+import test from 'ava';
+import fn from './';
 
-if (!process.env.CI) {
-	test('isShown', function (t) {
-		t.plan(2);
-
-		hiddenFiles.isShown(function (err, state) {
-			t.assert(!err, err);
-			t.assert(typeof state === 'boolean');
-		});
+if (process.env.CI) {
+	test(t => t.pass());
+} else {
+	test('isShown', async t => {
+		t.is(typeof await fn.isShown(), 'boolean');
 	});
 
-	test('hide(), show() and toggle()', function (t) {
-		t.plan(9);
+	test.serial('hide()', async t => {
+		await fn.hide();
+		t.false(await fn.isShown());
+	});
 
-		hiddenFiles.hide(function (err) {
-			t.assert(!err, err);
+	test.serial('show()', async t => {
+		await fn.show();
+		t.true(await fn.isShown());
+	});
 
-			hiddenFiles.isShown(function (err, state) {
-				t.assert(!err, err);
-				t.assert(state === false);
-
-				setTimeout(function () {
-					hiddenFiles.show(function (err) {
-						t.assert(!err, err);
-
-						hiddenFiles.isShown(function (err, state) {
-							t.assert(!err, err);
-							t.assert(state === true);
-
-							setTimeout(function () {
-								hiddenFiles.toggle(function (err) {
-									t.assert(!err, err);
-
-									hiddenFiles.isShown(function (err, state) {
-										t.assert(!err, err);
-										t.assert(state === false);
-									});
-								});
-							}, 5000);
-						});
-					});
-				}, 5000);
-			});
-		});
+	test.serial('toggle()', async t => {
+		await fn.toggle();
+		t.false(await fn.isShown());
 	});
 }
