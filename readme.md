@@ -15,13 +15,13 @@ $ npm install --save hidden-files
 ## Usage
 
 ```js
-var hiddenFiles = require('hidden-files');
+const hiddenFiles = require('hidden-files');
 
-hiddenFiles.show(function (err) {
+hiddenFiles.show().then(() => {
 	console.log('Hidden files are now shown');
 });
 
-hiddenFiles.isShown(function (err, state) {
+hiddenFiles.isShown().then(state => {
 	console.log(state);
 	//=> true
 });
@@ -45,19 +45,19 @@ $ hidden-files --help
 
 ## API
 
-### .isShown(callback)
+### .isShown()
 
 Check if hidden files are shown or hidden.
 
-### .show(callback)
+### .show()
 
 Show hidden files.
 
-### .hide(callback)
+### .hide()
 
 Hide hidden files.
 
-### .toggle([force], callback)
+### .toggle([force])
 
 Toggle the hidden files state.
 
