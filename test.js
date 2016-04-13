@@ -1,3 +1,4 @@
+import delay from 'timeout-as-promise';
 import test from 'ava';
 import fn from './';
 
@@ -14,11 +15,13 @@ if (process.env.CI) {
 	});
 
 	test.serial('show()', async t => {
+		await delay(3000);
 		await fn.show();
 		t.true(await fn.isShown());
 	});
 
 	test.serial('toggle()', async t => {
+		await delay(3000);
 		await fn.toggle();
 		t.false(await fn.isShown());
 	});

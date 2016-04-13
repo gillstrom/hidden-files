@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "ava": "*",
+    "timeout-as-promise": "^1.0.0",
     "xo": "*"
   },
   "xo": {
